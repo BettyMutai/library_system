@@ -1,4 +1,4 @@
-require('spec_helper')
+require("spec_helper")
 
 describe(Book) do
 
@@ -34,6 +34,14 @@ describe(Book) do
     it("lets you see the patron id") do
       test_book = Book.new({:title => "Learn SQL", :author => "Betty Mutai", :patron_id => 1})
       expect(test_book.patron_id()).to(eq(1))
+    end
+  end
+
+  describe("#==") do
+    it("is the same if it has the same author and title") do
+      book1 = Book.new({:title => "Learn SQL", :author => "Betty Mutai", :patron_id => 1})
+      book2 = Book.new({:title => "Learn SQL", :author => "Betty Mutai", :patron_id => 1})
+      expect(book1).to(eq(book2))
     end
   end
 
