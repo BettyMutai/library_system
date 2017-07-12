@@ -1,0 +1,14 @@
+<h3>Books</h3>
+<% if @patron.books().any?() %>
+<h3>Here are all the books in this patron</h3>
+
+<ol>
+  <% @patron.books().each() do |book| %>
+    <li><%= book.title() %><%= book.author() %></li>
+  <% end %>
+</ol>
+<% else %>
+  <p>There are no books yet!</p>
+<% end %>
+
+<p><a href="/">Return to Main Page</a></p>

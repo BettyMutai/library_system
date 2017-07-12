@@ -1,0 +1,39 @@
+<h1>Library System</h1>
+
+<p>Add a new patron:</p>
+
+<form action="/patrons" method="post">
+  <label for="name">Name of Patron:</label>
+  <input id="name" type="text" name="name">
+  <button type="submit">Add Patron</button>
+</form>
+
+<p>Add books to any patron:</p>
+<form action="/books" method="post">
+  <label for="patron_id">Select a Patron</label>
+    <select id='patron_id' name='patron_id' type='text'>
+      <% @patrons.each() do |patron| %>
+        <option value="<%= patron.id()%>"> <%= patron.name() %> </option>
+      <% end %>
+    </select>
+
+  <label for="title">Title of Book:</label>
+  <input id="title" type="text" name="title">
+
+  <label for="author">Author of Book:</label>
+  <input id="author" type="text" name="author">
+
+  <button type="submit">Add book</button>
+</form>
+
+<% if @patrons.any?() %>
+  <p>Click on a patron to see their books:</p>
+
+  <ul>
+    <% @patrons.each do |patron| %>
+    <li><a href="/patrons/<%= patron.id() %>"><%= patron.name() %></a></li>
+    <% end %>
+  </ul>
+  <% else %>
+  <p>There are no patrons yet!</p>
+  <% end %>
