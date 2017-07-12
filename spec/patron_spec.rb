@@ -31,5 +31,35 @@ describe(Patron) do
     end
   end
 
+  describe("#==") do
+    it("is the same patron if they have the same name") do
+      patron1 = Patron.new({:name => "Deedee", :id => nil})
+      patron2 = Patron.new({:name => "Deedee", :id => nil})
+      expect(patron1).to(eq(patron2))
+    end
+  end
+
+  describe(".find") do
+    it("returns a patron by their name") do
+      test_patron = Patron.new({:name => "Deedee", :id => nil})
+      test_patron.save()
+      test_patron2 = Patron.new({:name => "Emma", :id => nil})
+      test_patron2.save()
+      expect(Patron.find(test_patron2.id())).to(eq(test_patron2))
+    end
+  end
+
+  describe("#books") do
+    it("returns an array of books for that patron") do
+      test_patron = Patron.new({:name => "Deedee", :id => nil})
+      test_patron.save()
+      test_book = Book.new({:title => "Learn SQL", :author => "Betty Mutai", :patron_id => test_patron.id()})
+      test_book.save()
+      test_book2 = Book.new({:title => "Learn Ruby", :author => "Karen Mutai", :patron_id => test_patron.id()})
+      test_book2.save()
+      expect(test_patron.books()).to(eq([test_book,test_book2]))
+    end
+  end
+
 
 end
