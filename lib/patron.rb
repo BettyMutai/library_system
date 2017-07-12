@@ -48,5 +48,14 @@ class Patron
     patron_books
   end
 
+  define_method(:update) do |attributes|
+      @name = attributes.fetch(:name)
+      @id = self.id()
+      DB.exec("UPDATE patrons SET name = '#{@name}' WHERE id = #{@id};")
+    end
 
+  define_method(:delete) do
+    DB.exec("DELETE FROM patrons WHERE id = #{self.id()};")
+    DB.exec("DELETE FROM books WHERE patron_id = #{self.id()};")
+    end
 end

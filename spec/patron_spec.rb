@@ -61,5 +61,34 @@ describe(Patron) do
     end
   end
 
+  describe("#update") do
+      it("lets you update patrons in the database") do
+        patron = Patron.new({:name => "Deedee", :id => nil})
+        patron.save()
+        patron.update({:name => "Doreen"})
+        expect(patron.name()).to(eq("Doreen"))
+      end
+    end
+
+    describe("#delete") do
+      it("lets you delete a patron from the database") do
+        patron = Patron.new({:name => "Deedee", :id => nil})
+        patron.save()
+        patron2 = Patron.new({:name => "Emma", :id => nil})
+        patron2.save()
+        patron.delete()
+        expect(Patron.all()).to(eq([patron2]))
+      end
+      it("deletes a patron's books from the database") do
+        patron = Patron.new({:name => "Deedee", :id => nil})
+        patron.save()
+        book = Book.new({:title => "Learn SQL", :author => "Betty Mutai", :patron_id => patron.id()})
+        book.save()
+        book2 = Book.new({:title => "Learn Ruby", :author => "Karen Mutai", :patron_id => patron.id()})
+        book2.save()
+        patron.delete()
+        expect(Book.all()).to(eq([]))
+      end
+    end
 
 end

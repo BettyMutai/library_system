@@ -35,3 +35,27 @@ require("sinatra")
     @patron = Patron.find(patron_id)
     erb(:patron)
   end
+
+  get("/patrons/:id/edit") do
+    @patron = Patron.find(params.fetch("id").to_i())
+    erb(:patron_edit)
+  end
+
+  get("/lists/:id/edit") do
+    @list = List.find(params.fetch("id").to_i())
+    erb(:list_edit)
+  end
+
+  patch("/patrons/:id") do
+    name = params.fetch("name")
+    @patron = Patron.find(params.fetch("id").to_i())
+    @patron.update({:name => name})
+    erb(:patron)
+  end
+
+  delete("/patrons/:id") do
+    @patron = Patron.find(params.fetch("id").to_i())
+    @patron.delete()
+    @patrons = Patron.all()
+    erb(:index)
+  end
